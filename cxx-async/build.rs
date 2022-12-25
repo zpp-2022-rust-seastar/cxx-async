@@ -16,7 +16,7 @@ fn main() {
     }
 
     drop(fs::create_dir_all(&dest_include_path));
-    for header in &["cxx_async.h", "cxx_async_cppcoro.h", "cxx_async_folly.h"] {
+    for header in &["cxx_async.h", "cxx_async_cppcoro.h", "cxx_async_folly.h", "cxx_async_seastar.h"] {
         drop(fs::copy(
             Path::join(&src_include_path, header),
             Path::join(&dest_include_path, header),
