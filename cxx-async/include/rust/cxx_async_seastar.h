@@ -29,6 +29,9 @@
 #include <seastar/core/make_task.hh>
 #include "rust/cxx_async.h"
 
+namespace rust {
+namespace async {
+
 template<typename... T>
 struct cxx_awaiter {
     seastar::future<T...> _future;
@@ -109,9 +112,6 @@ public:
 
     void await_resume() { _future.get(); }
 };
-
-namespace rust {
-namespace async {
 
 template<typename T, typename Future>
 class AwaitTransformer<
