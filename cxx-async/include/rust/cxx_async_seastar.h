@@ -122,7 +122,7 @@ class AwaitTransformer<
 
  public:
   static auto await_transform(
-      RustPromiseBase<Future>& promise,
+      [[maybe_unused]] RustPromiseBase<Future>& promise,
       seastar::future<T>&& future) noexcept {
     return cxx_awaiter<T>(std::move(future));
   }
