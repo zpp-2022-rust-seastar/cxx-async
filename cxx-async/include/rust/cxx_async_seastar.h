@@ -16,7 +16,7 @@
  * under the License.
  */
 /*
- * Copyright (C) 2015 Cloudius Systems, Ltd.
+ * Copyright (C) 2023 ScyllaDB, Ltd.
  */
 
 // cxx-async/include/rust/cxx_async_seastar.h
@@ -25,9 +25,9 @@
 #define RUST_CXX_ASYNC_SEASTAR_H
 
 #include <seastar/core/future.hh>
-#include <seastar/core/std-coroutine.hh>
+#include <seastar/core/coroutine.hh>
 #include <seastar/core/make_task.hh>
-#include "rust/cxx_async.h"
+#include "cxx_async.h"
 
 namespace rust {
 namespace async {
@@ -44,7 +44,7 @@ public:
     bool await_ready() const noexcept { return _future.available(); }
 
     template<typename U>
-    void await_suspend(SEASTAR_INTERNAL_COROUTINE_NAMESPACE::coroutine_handle<U> hndl) noexcept {
+    void await_suspend(std::coroutine_handle<U> hndl) noexcept {
         seastar::task* t = seastar::make_task([hndl = std::move(hndl)] {
             hndl.resume();
         });
@@ -71,7 +71,7 @@ public:
     bool await_ready() const noexcept { return _future.available(); }
 
     template<typename U>
-    void await_suspend(SEASTAR_INTERNAL_COROUTINE_NAMESPACE::coroutine_handle<U> hndl) noexcept {
+    void await_suspend(std::coroutine_handle<U> hndl) noexcept {
         seastar::task* t = seastar::make_task([hndl = std::move(hndl)] {
             hndl.resume();
         });
@@ -98,7 +98,7 @@ public:
     bool await_ready() const noexcept { return _future.available(); }
 
     template<typename U>
-    void await_suspend(SEASTAR_INTERNAL_COROUTINE_NAMESPACE::coroutine_handle<U> hndl) noexcept {
+    void await_suspend(std::coroutine_handle<U> hndl) noexcept {
         seastar::task* t = seastar::make_task([hndl = std::move(hndl)] {
             hndl.resume();
         });
