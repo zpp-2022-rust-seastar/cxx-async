@@ -16,7 +16,7 @@ fn main() {
     }
 
     drop(fs::create_dir_all(&dest_include_path));
-    for header in &["cxx_async.h", "cxx_async_cppcoro.h", "cxx_async_folly.h"] {
+    for header in &["cxx_async.h", "cxx_async_cppcoro.h", "cxx_async_folly.h", "cxx_async_seastar.h"] {
         drop(fs::copy(
             Path::join(&src_include_path, header),
             Path::join(&dest_include_path, header),
@@ -29,6 +29,7 @@ fn main() {
     println!("cargo:rerun-if-changed=include/rust/cxx_async.h");
     println!("cargo:rerun-if-changed=include/rust/cxx_async_cppcoro.h");
     println!("cargo:rerun-if-changed=include/rust/cxx_async_folly.h");
+    println!("cargo:rerun-if-changed=include/rust/cxx_async_seastar.h");
 
     println!("cargo:rustc-cfg=built_with_cargo");
 
@@ -37,6 +38,7 @@ fn main() {
         .files(&vec!["src/cxx_async.cpp"])
         .flag_if_supported("-std=c++20")
         .flag_if_supported("-fcoroutines-ts")
+        .flag_if_supported("-fcoroutines")
         .include("include")
         .compile("cxx-async");
 }
